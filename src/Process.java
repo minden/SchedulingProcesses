@@ -3,12 +3,12 @@
  */
 public class Process {
 
-    public String ProcessID;
-    public Integer ProcessingTime;
-    public Integer ArrivalTime;
-    public Float IOBlockProbability;
-    public Integer IOBlockTime;
-    
+    private String ProcessID;
+    private Integer ProcessingTime;
+    private Integer ArrivalTime;
+    private Float IOBlockProbability;
+    private Integer IOBlockTime;
+
     public Process(String ProceddID, Integer ProcessingTime, Integer ArrivalTime, Float IOBlockProbability, Integer IOBlockTime){
 
         this.ProcessID = ProceddID;
@@ -17,5 +17,25 @@ public class Process {
         this.IOBlockProbability = IOBlockProbability;
         this.IOBlockTime = IOBlockTime;
 
+    }
+
+    public Float getIOBlockProbability() {
+        return IOBlockProbability;
+    }
+
+    public String getProcessID() {
+        return ProcessID;
+    }
+
+    public Integer getProcessingTime() {
+        return ProcessingTime;
+    }
+
+    public Integer getArrivalTime() {
+        return ArrivalTime;
+    }
+
+    public Integer getIOBlockTime() {
+        return IOBlockTime;
     }
 }
