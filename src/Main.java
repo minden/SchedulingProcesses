@@ -5,7 +5,6 @@ public class Main {
     public static void main(String[] args){
         CSVReader csvReader = new CSVReader();
         processes = csvReader.read();
-        System.out
 
     }
 }
