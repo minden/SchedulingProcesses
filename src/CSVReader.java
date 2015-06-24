@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class CSVReader {
     public ArrayList<Process> read(){
-        String csvFile = "/home/indenml/S4/csos/bonus/03/SchedulingProcesses/example.csv";
+        String csvFile = "/home/indenml/S4/csos/bonus/03/SchedulingProcesses/VLBeispiel.csv";
         BufferedReader br = null;
         String line = null;
         String csvSplitBy = ";";

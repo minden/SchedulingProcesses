@@ -13,6 +13,10 @@ public class Main {
         fcfsSchedule.printSchedule();
         System.out.println(fcfsSchedule.getTurnAroundTime(processes.get(0)));
 
+        Schedule hrrnSchedule = HighestResponseRatioNext.generateProcessSchedule(processes);
+        hrrnSchedule.printSchedule();
+
+
     }
 
     public static void printProcesses(ArrayList<Process> processes) {

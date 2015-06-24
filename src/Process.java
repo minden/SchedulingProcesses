@@ -27,9 +27,7 @@ public class Process {
         return ProcessID;
     }
 
-    public Integer getProcessingTime() {
-        return ProcessingTime;
-    }
+    public Integer getProcessingTime() { return ProcessingTime; }
 
     public Integer getArrivalTime() {
         return ArrivalTime;
