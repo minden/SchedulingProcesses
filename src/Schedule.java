@@ -29,4 +29,15 @@ public class Schedule {
 
         return finishTime - arrivalTime;
     }
+
+    public void printSchedule() {
+        for (ScheduleItem item : this.schedule) {
+            System.out.println("ProcessID: " + item.getItemID());
+            System.out.println("  ProcessStartTime: " + item.getStartTime());
+            System.out.println("  ProcessEndTime: " + item.getEndTime());
+            System.out.println("  ProcessFinished: " + item.getFinished());
+            System.out.println();
+        }
+        System.out.println("----------------------------------------------");
+    }
 }

@@ -9,9 +9,9 @@ public class Main {
         CSVReader csvReader = new CSVReader();
         ArrayList<Process> processes = csvReader.read();
         printProcesses(processes);
-        Schedule FCFSSchedule = FirstComeFirstServe.generateProcessSchedule(processes);
-        printSchedule(FCFSSchedule);
-        System.out.println(FCFSSchedule.getTurnAroundTime(processes.get(0)));
+        Schedule fcfsSchedule = FirstComeFirstServe.generateProcessSchedule(processes);
+        fcfsSchedule.printSchedule();
+        System.out.println(fcfsSchedule.getTurnAroundTime(processes.get(0)));
 
     }
 
@@ -27,16 +27,6 @@ public class Main {
         System.out.println("----------------------------------------------");
     }
 
-    public static void printSchedule(Schedule schedule) {
-        for (ScheduleItem item : schedule.getSchedule()) {
-            System.out.println("ProcessID: " + item.getItemID());
-            System.out.println("  ProcessStartTime: " + item.getStartTime());
-            System.out.println("  ProcessEndTime: " + item.getEndTime());
-            System.out.println("  ProcessFinished: " + item.getFinished());
-            System.out.println();
-        }
-        System.out.println("----------------------------------------------");
 
-    }
 
 }
