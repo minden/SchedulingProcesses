@@ -1,3 +1,5 @@
+import com.sun.xml.internal.bind.v2.TODO;
+
 import java.lang.*;
 import java.util.ArrayList;
 
@@ -15,6 +17,8 @@ public class Main {
 
         Schedule hrrnSchedule = HighestResponseRatioNext.generateProcessSchedule(processes);
         hrrnSchedule.printSchedule();
+        //TODO: hrrn deletes all the processes out of the Array. Has to be prevented!
+        System.out.println(hrrnSchedule.getTurnAroundTime(processes.get(0)));
 
 
     }
