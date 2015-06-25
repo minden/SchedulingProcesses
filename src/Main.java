@@ -1,5 +1,4 @@
 
-import java.lang.*;
 import java.util.ArrayList;
 
 /**
@@ -10,24 +9,20 @@ public class Main {
 
         CSVReader csvReader = new CSVReader();
         ArrayList<Process> processes = csvReader.read();
-        //printProcesses(processes);
 
-        //Schedule fcfsSchedule = FirstComeFirstServe.generateProcessSchedule(processes);
-        //fcfsSchedule.printSchedule();
-        //System.out.println(fcfsSchedule.getTurnAroundTime(processes.get(0)));
-
-        //Schedule hrrnSchedule = HighestResponseRatioNext.generateProcessSchedule(processes);
-        //hrrnSchedule.printSchedule();
-        //System.out.println(hrrnSchedule.getTurnAroundTime(processes.get(0)));
-
-        //Schedule spnSchedule = ShortestProcessNext.generateProcessSchedule(processes);
-        //spnSchedule.printSchedule();
-
-        //Schedule srtSchedule = ShortestRemainingTime.generateProcessSchedule(processes);
-        //srtSchedule.printSchedule();
-
+        Schedule fcfsSchedule = FirstComeFirstServe.generateProcessSchedule(processes);
+        Schedule hrrnSchedule = HighestResponseRatioNext.generateProcessSchedule(processes);
+        Schedule spnSchedule = ShortestProcessNext.generateProcessSchedule(processes);
+        Schedule srtSchedule = ShortestRemainingTime.generateProcessSchedule(processes);
         Schedule rrSchedule = RoundRobin.generateProcessSchedule(processes);
-        rrSchedule.printSchedule();
+
+        for(Process process : processes){
+            System.out.println(process.getProcessID() + ";" + "SRT;" + srtSchedule.getTurnAroundTime(process));
+            System.out.println(process.getProcessID() + ";" + "FCFS;" + fcfsSchedule.getTurnAroundTime(process));
+            System.out.println(process.getProcessID() + ";" + "HRRN;" + hrrnSchedule.getTurnAroundTime(process));
+            System.out.println(process.getProcessID() + ";" + "RR10;" + rrSchedule.getTurnAroundTime(process));
+            System.out.println(process.getProcessID() + ";" + "SPN;" + spnSchedule.getTurnAroundTime(process));
+        }
 
 
     }

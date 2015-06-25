@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class CSVReader {
     public ArrayList<Process> read(){
-        String csvFile = "/home/indenml/S4/csos/bonus/03/SchedulingProcesses/VLBeispiel.csv";
+        String csvFile = "/home/indenml/S4/csos/bonus/03/SchedulingProcesses/bonus-task-3-samplefile.csv";
         BufferedReader br = null;
         String line = null;
         String csvSplitBy = ";";
@@ -18,7 +18,7 @@ public class CSVReader {
         try {
             br = new BufferedReader(new FileReader(csvFile));
             //Jump header of file
-            br.readLine();
+            //br.readLine();
             while ((line = br.readLine()) != null) {
                 String[] readResult = line.split(csvSplitBy);
                 processes.add(new Process(readResult[0], Integer.parseInt(readResult[1]), Integer.parseInt(readResult[2]), Float.parseFloat(readResult[3]), Integer.parseInt(readResult[4])));

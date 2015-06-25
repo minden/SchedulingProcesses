@@ -29,7 +29,6 @@ public class FirstComeFirstServe {
             currentTime = processStartTime + process.getProcessingTime();
         }
 
-        Main.printProcesses(processes);
 
         return schedule;
     }
