@@ -19,6 +19,10 @@ public class Process {
 
     }
 
+    public void setProcessingTime(Integer processingTime) {
+        ProcessingTime = processingTime;
+    }
+
     public Float getIOBlockProbability() {
         return IOBlockProbability;
     }

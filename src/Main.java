@@ -20,8 +20,11 @@ public class Main {
         //hrrnSchedule.printSchedule();
         //System.out.println(hrrnSchedule.getTurnAroundTime(processes.get(0)));
 
-        Schedule spnSchedule = ShortestProcessNext.generateProcessSchedule(processes);
-        spnSchedule.printSchedule();
+        //Schedule spnSchedule = ShortestProcessNext.generateProcessSchedule(processes);
+        //spnSchedule.printSchedule();
+
+        Schedule srtSchedule = ShortestRemainingTime.generateProcessSchedule(processes);
+        srtSchedule.printSchedule();
 
 
     }
