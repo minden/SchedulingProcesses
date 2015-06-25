@@ -33,7 +33,7 @@ public class RoundRobin {
                 }
 
                 //Check if currently running Process is out of time
-                else if(currentTime-startTimeCuRuPr >= 10){
+                else if(currentTime-startTimeCuRuPr >= quantum){
                     Integer remainingTime = currentlyRunningProcess.getProcessingTime() - (currentTime-startTimeCuRuPr);
                     currentlyRunningProcess.setProcessingTime(remainingTime);
                     processes.add(currentlyRunningProcess);
