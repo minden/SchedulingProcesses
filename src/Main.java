@@ -23,8 +23,11 @@ public class Main {
         //Schedule spnSchedule = ShortestProcessNext.generateProcessSchedule(processes);
         //spnSchedule.printSchedule();
 
-        Schedule srtSchedule = ShortestRemainingTime.generateProcessSchedule(processes);
-        srtSchedule.printSchedule();
+        //Schedule srtSchedule = ShortestRemainingTime.generateProcessSchedule(processes);
+        //srtSchedule.printSchedule();
+
+        Schedule rrSchedule = RoundRobin.generateProcessSchedule(processes);
+        rrSchedule.printSchedule();
 
 
     }
