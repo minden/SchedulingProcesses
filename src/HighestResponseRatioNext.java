@@ -6,7 +6,8 @@ import java.util.Comparator;
  * Created by indenml on 21.06.15.
  */
 public class HighestResponseRatioNext {
-    public static Schedule generateProcessSchedule(ArrayList<Process> processes) {
+    public static Schedule generateProcessSchedule(ArrayList<Process> inputProcesses) {
+        ArrayList<Process> processes = (ArrayList<Process>) inputProcesses.clone();
         Integer currentTime = 0;
         Schedule schedule = new Schedule();
 
@@ -27,6 +28,8 @@ public class HighestResponseRatioNext {
                     relevantProcesses.add(process);
                 }
             }
+
+            if (relevantProcesses.size() == 0) break;
 
             //Find process with highest response ratio
             Integer interestingProcess = 0;

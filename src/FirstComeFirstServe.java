@@ -10,6 +10,7 @@ public class FirstComeFirstServe {
         Integer currentTime = 0;
         Schedule schedule = new Schedule();
 
+
         //Sort processes by arrival time
         Collections.sort(processes, new Comparator<Process>() {
             @Override
