@@ -12,6 +12,7 @@ public class HighestResponseRatioNext {
         Schedule schedule = new Schedule();
 
         //Sort processes by arrival time
+        //TODO: Is this relevant?
         Collections.sort(processes, new Comparator<Process>() {
             @Override
             public int compare(Process p1, Process p2) {

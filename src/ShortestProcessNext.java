@@ -1,3 +1,4 @@
+import java.lang.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -6,30 +7,40 @@ import java.util.Comparator;
  * Created by indenml on 25.06.15.
  */
 public class ShortestProcessNext {
-    public static Schedule generateProcessSchedule(ArrayList<Process> processes) {
+    public static Schedule generateProcessSchedule(ArrayList<Process> inputProcesses) {
+        ArrayList<Process> processes = (ArrayList<Process>) inputProcesses.clone();
         Integer currentTime = 0;
         Schedule schedule = new Schedule();
 
+        while(processes.size() > 0){
 
-        //Sort processes by processing time
-        Collections.sort(processes, new Comparator<Process>() {
-            @Override
-            public int compare(Process p1, Process p2) {
-                return p1.getProcessingTime().compareTo(p2.getProcessingTime());
+            //Get all currently waiting Processes
+            ArrayList<Process> waitingProcesses = new ArrayList<>();
+            for (Process process : processes){
+                if(process.getArrivalTime()<=currentTime)
+                    waitingProcesses.add(process);
             }
-        });
 
-        for (Process process : processes) {
-            Integer processStartTime;
-            if (process.getArrivalTime() > currentTime)
-                processStartTime = process.getArrivalTime();
-            else
-                processStartTime = currentTime;
-            schedule.add(new ScheduleItem(process.getProcessID(), processStartTime, processStartTime + process.getProcessingTime(), true));
-            currentTime = processStartTime + process.getProcessingTime();
+            //Check if no processes are currently waiting
+            if(waitingProcesses.size() == 0){
+                currentTime++;
+                continue;
+            }
+
+            //Get the process with the smallest processing time
+            Process favouriteProcess = waitingProcesses.get(0);
+            for(Process process : waitingProcesses){
+                if(process.getProcessingTime() < favouriteProcess.getProcessingTime())
+                    favouriteProcess = process;
+            }
+
+            //Add favourite Process to schedule
+            schedule.add(new ScheduleItem(favouriteProcess.getProcessID(),currentTime, favouriteProcess.getProcessingTime() + currentTime, true));
+
+            processes.remove(favouriteProcess);
+            currentTime = currentTime + favouriteProcess.getProcessingTime();
         }
 
-        Main.printProcesses(processes);
 
         return schedule;
     }

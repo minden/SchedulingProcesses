@@ -7,17 +7,21 @@ import java.util.ArrayList;
  */
 public class Main {
     public static void main(String[] args) {
+
         CSVReader csvReader = new CSVReader();
         ArrayList<Process> processes = csvReader.read();
-        printProcesses(processes);
-        Schedule fcfsSchedule = FirstComeFirstServe.generateProcessSchedule(processes);
-        fcfsSchedule.printSchedule();
-        System.out.println(fcfsSchedule.getTurnAroundTime(processes.get(0)));
+        //printProcesses(processes);
 
-        Schedule hrrnSchedule = HighestResponseRatioNext.generateProcessSchedule(processes);
-        hrrnSchedule.printSchedule();
-        //TODO: hrrn deletes all the processes out of the Array. Has to be prevented!
-        System.out.println(hrrnSchedule.getTurnAroundTime(processes.get(0)));
+        //Schedule fcfsSchedule = FirstComeFirstServe.generateProcessSchedule(processes);
+        //fcfsSchedule.printSchedule();
+        //System.out.println(fcfsSchedule.getTurnAroundTime(processes.get(0)));
+
+        //Schedule hrrnSchedule = HighestResponseRatioNext.generateProcessSchedule(processes);
+        //hrrnSchedule.printSchedule();
+        //System.out.println(hrrnSchedule.getTurnAroundTime(processes.get(0)));
+
+        Schedule spnSchedule = ShortestProcessNext.generateProcessSchedule(processes);
+        spnSchedule.printSchedule();
 
 
     }
