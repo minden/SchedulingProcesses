@@ -29,7 +29,11 @@ public class HighestResponseRatioNext {
                 }
             }
 
-            if (relevantProcesses.size() == 0) break;
+            //If there are no processes currently available
+            if (relevantProcesses.size() == 0){
+                currentTime++;
+                continue;
+            }
 
             //Find process with highest response ratio
             Integer interestingProcess = 0;
@@ -41,12 +45,12 @@ public class HighestResponseRatioNext {
                 }
             }
 
-            //add process to schedule
+            //add that process to schedule
             Process processToBeAdded = relevantProcesses.get(interestingProcess);
             ScheduleItem item = new ScheduleItem(processToBeAdded.getProcessID(),currentTime, currentTime + processToBeAdded.getProcessingTime(), true);
             schedule.add(item);
 
-            //delete process from list
+            //delete that process from list
             processes.remove(processToBeAdded);
 
             currentTime = currentTime + processToBeAdded.getProcessingTime();
