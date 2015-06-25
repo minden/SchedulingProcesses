@@ -7,7 +7,7 @@ import java.util.Comparator;
  */
 public class RoundRobin {
     public static Schedule generateProcessSchedule(ArrayList<Process> inputProcesses) {
-        ArrayList<Process> processes = inputProcesses;
+        ArrayList<Process> processes = (ArrayList<Process>) inputProcesses.clone();
         Schedule schedule = new Schedule();
         Integer quantum = 10;
 
