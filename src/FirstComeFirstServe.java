@@ -6,7 +6,13 @@ import java.util.Comparator;
  * Created by indenml on 21.06.15.
  */
 public class FirstComeFirstServe {
-    public static Schedule generateProcessSchedule(ArrayList<Process> processes) {
+    public static Schedule generateProcessSchedule(ArrayList<Process> inputProcesses) {
+        ArrayList<Process> processes = new ArrayList<Process>();
+
+        //clone inputProcesses
+        for(Process process : inputProcesses){
+            processes.add(process.clone());
+        }
         Integer currentTime = 0;
         Schedule schedule = new Schedule();
 
