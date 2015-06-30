@@ -5,7 +5,12 @@ import java.util.ArrayList;
  */
 public class ShortestRemainingTime {
     public static Schedule generateProcessSchedule(ArrayList<Process> inputProcesses) {
-        ArrayList<Process> processes = (ArrayList<Process>) inputProcesses.clone();
+        ArrayList<Process> processes = new ArrayList<Process>();
+
+        //clone inputProcesses
+        for(Process process : inputProcesses){
+            processes.add(process.clone());
+        }
         Integer currentTime = 0;
         Schedule schedule = new Schedule();
 

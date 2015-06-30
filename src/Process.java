@@ -40,4 +40,6 @@ public class Process {
     public Integer getIOBlockTime() {
         return IOBlockTime;
     }
+
+    public Process clone(){ return new Process(this.ProcessID, this.ProcessingTime, this.ArrivalTime, this.IOBlockProbability, this.IOBlockTime);}
 }

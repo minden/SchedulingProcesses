@@ -7,9 +7,16 @@ import java.util.Comparator;
  */
 public class RoundRobin {
     public static Schedule generateProcessSchedule(ArrayList<Process> inputProcesses) {
-        ArrayList<Process> processes = (ArrayList<Process>) inputProcesses.clone();
+        ArrayList<Process> processes = new ArrayList<Process>();
+
+        //clone inputProcesses
+        for(Process process : inputProcesses){
+            processes.add(process.clone());
+        }
+
+        ArrayList<Process> processesQue = new ArrayList<>();
         Schedule schedule = new Schedule();
-        Integer quantum = 10;
+        Integer quantum = 4;
 
         //Sort processes by arrival time
         Collections.sort(processes, new Comparator<Process>() {
@@ -23,12 +30,20 @@ public class RoundRobin {
         Process currentlyRunningProcess = null;
         Integer startTimeCuRuPr = 0;
 
-        while(processes.size() > 0){
+        while(processes.size() > 1){
+
+            //Fill processesQue
+            for(Process process : processes){
+                if(process.getArrivalTime() == currentTime)
+                    processesQue.add(process);
+            }
+
             if(currentlyRunningProcess != null){
 
                 //Check if currently running Process is finished
                 if(currentlyRunningProcess.getProcessingTime() == currentTime-startTimeCuRuPr){
                     schedule.add(new ScheduleItem(currentlyRunningProcess.getProcessID(), startTimeCuRuPr, currentTime, true));
+                    processes.remove(currentlyRunningProcess);
                     currentlyRunningProcess = null;
                 }
 
@@ -36,7 +51,7 @@ public class RoundRobin {
                 else if(currentTime-startTimeCuRuPr >= quantum){
                     Integer remainingTime = currentlyRunningProcess.getProcessingTime() - (currentTime-startTimeCuRuPr);
                     currentlyRunningProcess.setProcessingTime(remainingTime);
-                    processes.add(currentlyRunningProcess);
+                    processesQue.add(currentlyRunningProcess);
                     schedule.add(new ScheduleItem(currentlyRunningProcess.getProcessID(), startTimeCuRuPr, currentTime, false));
                     currentlyRunningProcess = null;
                 }
@@ -46,8 +61,8 @@ public class RoundRobin {
                 }
             }
 
-            currentlyRunningProcess = processes.get(0);
-            processes.remove(0);
+            currentlyRunningProcess = processesQue.get(0);
+            processesQue.remove(0);
             startTimeCuRuPr = currentTime;
             currentTime++;
 

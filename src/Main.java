@@ -15,14 +15,16 @@ public class Main {
         Schedule spnSchedule = ShortestProcessNext.generateProcessSchedule(processes);
         Schedule srtSchedule = ShortestRemainingTime.generateProcessSchedule(processes);
         Schedule rrSchedule = RoundRobin.generateProcessSchedule(processes);
+        //TODO: Still error in RR scheduling see VLBeispiel
+        rrSchedule.printSchedule();
 
-        for(Process process : processes){
-            System.out.println(process.getProcessID() + ";" + "SRT;" + srtSchedule.getTurnAroundTime(process));
-            System.out.println(process.getProcessID() + ";" + "FCFS;" + fcfsSchedule.getTurnAroundTime(process));
-            System.out.println(process.getProcessID() + ";" + "HRRN;" + hrrnSchedule.getTurnAroundTime(process));
-            System.out.println(process.getProcessID() + ";" + "RR10;" + rrSchedule.getTurnAroundTime(process));
-            System.out.println(process.getProcessID() + ";" + "SPN;" + spnSchedule.getTurnAroundTime(process));
-        }
+//        for(Process process : processes){
+//            System.out.println(process.getProcessID() + ";" + "SRT;" + srtSchedule.getTurnAroundTime(process));
+//            System.out.println(process.getProcessID() + ";" + "FCFS;" + fcfsSchedule.getTurnAroundTime(process));
+//            System.out.println(process.getProcessID() + ";" + "HRRN;" + hrrnSchedule.getTurnAroundTime(process));
+//            System.out.println(process.getProcessID() + ";" + "RR10;" + rrSchedule.getTurnAroundTime(process));
+//            System.out.println(process.getProcessID() + ";" + "SPN;" + spnSchedule.getTurnAroundTime(process));
+//        }
 
 
     }
