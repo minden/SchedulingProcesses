@@ -7,6 +7,8 @@ import java.util.Comparator;
  */
 public class RoundRobin {
     public static Schedule generateProcessSchedule(ArrayList<Process> inputProcesses) {
+
+        /* ---------------------- Initialize ----------------------*/
         ArrayList<Process> processes = new ArrayList<Process>();
         ArrayList<Process> processQueue = new ArrayList<>();
         Schedule schedule = new Schedule();
@@ -28,7 +30,7 @@ public class RoundRobin {
             }
         });
 
-
+        /* ---------------------- Algorithm ----------------------*/
         while(processes.size() > 0){
 
             if(currentlyRunningProcess != null){
