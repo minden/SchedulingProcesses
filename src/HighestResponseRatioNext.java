@@ -7,6 +7,8 @@ import java.util.Comparator;
  */
 public class HighestResponseRatioNext {
     public static Schedule generateProcessSchedule(ArrayList<Process> inputProcesses) {
+
+        /* ---------------------- Initialize ----------------------*/
         ArrayList<Process> processes = new ArrayList<Process>();
         ArrayList<Process> processQueue = new ArrayList<Process>();
         Integer ct = 0;
@@ -19,6 +21,7 @@ public class HighestResponseRatioNext {
             processes.add(process.clone());
         }
 
+        /* ---------------------- Algorithm ----------------------*/
         while(processes.size() != 0) {
 
             //Check if the currently running process is done

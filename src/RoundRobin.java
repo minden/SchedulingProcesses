@@ -8,15 +8,17 @@ import java.util.Comparator;
 public class RoundRobin {
     public static Schedule generateProcessSchedule(ArrayList<Process> inputProcesses) {
         ArrayList<Process> processes = new ArrayList<Process>();
+        ArrayList<Process> processQueue = new ArrayList<>();
+        Schedule schedule = new Schedule();
+        Integer quantum = 4;
+        Integer ct = 0;
+        Process currentlyRunningProcess = null;
+        Integer startTimeCuRuPr = 0;
 
         //clone inputProcesses
         for(Process process : inputProcesses){
             processes.add(process.clone());
         }
-
-        ArrayList<Process> processesQue = new ArrayList<>();
-        Schedule schedule = new Schedule();
-        Integer quantum = 4;
 
         //Sort processes by arrival time
         Collections.sort(processes, new Comparator<Process>() {
@@ -26,50 +28,75 @@ public class RoundRobin {
             }
         });
 
-        Integer currentTime = 0;
-        Process currentlyRunningProcess = null;
-        Integer startTimeCuRuPr = 0;
 
-        while(processes.size() > 1){
-
-            //Fill processesQue
-            for(Process process : processes){
-                if(process.getArrivalTime() == currentTime)
-                    processesQue.add(process);
-            }
+        while(processes.size() > 0){
 
             if(currentlyRunningProcess != null){
 
-                //Check if currently running Process is finished
-                if(currentlyRunningProcess.getProcessingTime() == currentTime-startTimeCuRuPr){
-                    schedule.add(new ScheduleItem(currentlyRunningProcess.getProcessID(), startTimeCuRuPr, currentTime, true));
+                //Check if the currently running process is done
+                if(currentlyRunningProcess.getProcessingTime() == ct-startTimeCuRuPr){
+                    schedule.add(new ScheduleItem(currentlyRunningProcess.getProcessID(), startTimeCuRuPr, ct, true));
                     processes.remove(currentlyRunningProcess);
                     currentlyRunningProcess = null;
+                    startTimeCuRuPr = null;
+                }
+
+
+                //Check if the currently running Process is blocked
+                else if(currentlyRunningProcess.isBlocked(ct)){
+                    schedule.add(new ScheduleItem(currentlyRunningProcess.getProcessID(), startTimeCuRuPr, ct, false));
+                    currentlyRunningProcess.setProcessingTime(currentlyRunningProcess.getProcessingTime() - ( ct-startTimeCuRuPr));
+                    currentlyRunningProcess = null;
+                    startTimeCuRuPr = null;
                 }
 
                 //Check if currently running Process is out of time
-                else if(currentTime-startTimeCuRuPr >= quantum){
-                    Integer remainingTime = currentlyRunningProcess.getProcessingTime() - (currentTime-startTimeCuRuPr);
+                else if(ct-startTimeCuRuPr >= quantum){
+                    Integer remainingTime = currentlyRunningProcess.getProcessingTime() - (ct-startTimeCuRuPr);
                     currentlyRunningProcess.setProcessingTime(remainingTime);
-                    processesQue.add(currentlyRunningProcess);
-                    schedule.add(new ScheduleItem(currentlyRunningProcess.getProcessID(), startTimeCuRuPr, currentTime, false));
+                    processQueue.add(currentlyRunningProcess);
+                    schedule.add(new ScheduleItem(currentlyRunningProcess.getProcessID(), startTimeCuRuPr, ct, false));
                     currentlyRunningProcess = null;
+                    startTimeCuRuPr = null;
                 }
-                else {
-                    currentTime++;
+
+            }
+
+            //Fill processQueue
+            for(Process process : processes){
+                //Currently arrived not blocked processes
+                if(process.getArrivalTime() == ct && !(process.isBlocked(ct))){
+                    processQueue.add(process);
                     continue;
+                }
+                //Processes that were blocked but are now ready
+                if(process.getBlockedTill() == ct){
+                    processQueue.add(process);
                 }
             }
 
-            currentlyRunningProcess = processesQue.get(0);
-            processesQue.remove(0);
-            startTimeCuRuPr = currentTime;
-            currentTime++;
+            //If there are no processes currently ready
+            if (processQueue.size() == 0){
+                ct++;
+                continue;
+            }
+
+            if(currentlyRunningProcess != null){
+                ct++;
+                continue;
+            }
+
+            //run the process
+            currentlyRunningProcess = processQueue.get(0);
+            startTimeCuRuPr = ct;
+            currentlyRunningProcess.start(ct);
+            processQueue.remove(currentlyRunningProcess);
+            ct++;
+
+
 
         }
 
-        //Add last currentlyRunningProcess to schedule
-        schedule.add(new ScheduleItem(currentlyRunningProcess.getProcessID(), startTimeCuRuPr, startTimeCuRuPr + currentlyRunningProcess.getProcessingTime(), true));
 
         return schedule;
 
