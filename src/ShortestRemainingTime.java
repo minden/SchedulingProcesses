@@ -5,6 +5,8 @@ import java.util.ArrayList;
  */
 public class ShortestRemainingTime {
     public static Schedule generateProcessSchedule(ArrayList<Process> inputProcesses) {
+
+        /* ---------------------- Initialize ----------------------*/
         ArrayList<Process> processes = new ArrayList<Process>();
         ArrayList<Process> processQueue = new ArrayList<Process>();
         Integer ct = 0;
@@ -17,7 +19,7 @@ public class ShortestRemainingTime {
             processes.add(process.clone());
         }
 
-
+        /* ---------------------- Algorithm ----------------------*/
         while(processes.size() > 0){
 
             //Check if the currently running process is done
@@ -43,12 +45,12 @@ public class ShortestRemainingTime {
             //Fill the processQue
             for(Process process : processes){
                 //Currently arrived not blocked processes
-                if(process.getArrivalTime() == ct && !(process.isBlocked(ct))){
+                if(process.getArrivalTime().equals(ct) && !(process.isBlocked(ct))){
                     processQueue.add(process);
                     continue;
                 }
                 //Processes that were blocked but are now ready
-                if(process.getBlockedTill() == ct){
+                if(process.getBlockedTill().equals(ct)){
                     processQueue.add(process);
                 }
             }

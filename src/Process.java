@@ -11,7 +11,7 @@ public class Process {
     private Float IOBlockProbability;
     private Integer IOBlockTime;
 
-    private Integer blockedTill = 0;
+    private Integer blockedTill = null;
 
     public Process(String ProceddID, Integer ProcessingTime, Integer ArrivalTime, Float IOBlockProbability, Integer IOBlockTime){
 
@@ -53,7 +53,7 @@ public class Process {
         Float max = 1f;
         Float min = 0f;
 
-        Random random = new Random();
+        Random random = new Random(42);
         Float ranFloat = random.nextFloat() * (max-min)+min;
 
         if(IOBlockProbability > ranFloat)
@@ -61,7 +61,7 @@ public class Process {
     }
 
     public Boolean isBlocked(Integer ct){
-        return blockedTill >= ct;
+        return (blockedTill.compareTo(ct)) >= 0 ;
     }
 
     public Integer getBlockedTill(){

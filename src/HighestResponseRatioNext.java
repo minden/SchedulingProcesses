@@ -47,12 +47,12 @@ public class HighestResponseRatioNext {
             //Fill the processQue
             for(Process process : processes){
                 //Currently arrived not blocked processes
-                if(process.getArrivalTime() == ct && !(process.isBlocked(ct))){
+                if(process.getArrivalTime().equals(ct) && !(process.isBlocked(ct))){
                     processQueue.add(process);
                     continue;
                 }
                 //Processes that were blocked but are now ready
-                if(process.getBlockedTill() == ct){
+                if(process.getBlockedTill().equals(ct)){
                     processQueue.add(process);
                 }
             }

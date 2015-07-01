@@ -12,7 +12,7 @@ public class RoundRobin {
         ArrayList<Process> processes = new ArrayList<Process>();
         ArrayList<Process> processQueue = new ArrayList<>();
         Schedule schedule = new Schedule();
-        Integer quantum = 4;
+        Integer quantum = 10;
         Integer ct = 0;
         Process currentlyRunningProcess = null;
         Integer startTimeCuRuPr = 0;
@@ -67,12 +67,12 @@ public class RoundRobin {
             //Fill processQueue
             for(Process process : processes){
                 //Currently arrived not blocked processes
-                if(process.getArrivalTime() == ct && !(process.isBlocked(ct))){
+                if(process.getArrivalTime().equals(ct) && !(process.isBlocked(ct))){
                     processQueue.add(process);
                     continue;
                 }
                 //Processes that were blocked but are now ready
-                if(process.getBlockedTill() == ct){
+                if(process.getBlockedTill().equals(ct)){
                     processQueue.add(process);
                 }
             }

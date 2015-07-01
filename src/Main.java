@@ -9,22 +9,28 @@ public class Main {
 
         CSVReader csvReader = new CSVReader();
         ArrayList<Process> processes = csvReader.read();
+        System.out.println("Reading CSV file finished");
 
         Schedule fcfsSchedule = FirstComeFirstServe.generateProcessSchedule(processes);
+        System.out.println("FCFS done");
         Schedule hrrnSchedule = HighestResponseRatioNext.generateProcessSchedule(processes);
-        hrrnSchedule.printSchedule();
+        System.out.println("HRRN done");
         Schedule spnSchedule = ShortestProcessNext.generateProcessSchedule(processes);
+        System.out.println("SPN done");
         Schedule srtSchedule = ShortestRemainingTime.generateProcessSchedule(processes);
+        System.out.println("SRT done");
         Schedule rrSchedule = RoundRobin.generateProcessSchedule(processes);
+        System.out.println("RR done");
 
 
-//        for(Process process : processes){
-//            System.out.println(process.getProcessID() + ";" + "SRT;" + srtSchedule.getTurnAroundTime(process));
-//            System.out.println(process.getProcessID() + ";" + "FCFS;" + fcfsSchedule.getTurnAroundTime(process));
-//            System.out.println(process.getProcessID() + ";" + "HRRN;" + hrrnSchedule.getTurnAroundTime(process));
-//            System.out.println(process.getProcessID() + ";" + "RR10;" + rrSchedule.getTurnAroundTime(process));
-//            System.out.println(process.getProcessID() + ";" + "SPN;" + spnSchedule.getTurnAroundTime(process));
-//        }
+
+        for(Process process : processes){
+            System.out.println(process.getProcessID() + ";" + "SRT;" + srtSchedule.getTurnAroundTime(process));
+            System.out.println(process.getProcessID() + ";" + "FCFS;" + fcfsSchedule.getTurnAroundTime(process));
+            System.out.println(process.getProcessID() + ";" + "HRRN;" + hrrnSchedule.getTurnAroundTime(process));
+            System.out.println(process.getProcessID() + ";" + "RR10;" + rrSchedule.getTurnAroundTime(process));
+            System.out.println(process.getProcessID() + ";" + "SPN;" + spnSchedule.getTurnAroundTime(process));
+        }
 
 
     }
