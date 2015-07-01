@@ -11,12 +11,12 @@ public class Main {
         ArrayList<Process> processes = csvReader.read();
 
         Schedule fcfsSchedule = FirstComeFirstServe.generateProcessSchedule(processes);
+        fcfsSchedule.printSchedule();
         Schedule hrrnSchedule = HighestResponseRatioNext.generateProcessSchedule(processes);
         Schedule spnSchedule = ShortestProcessNext.generateProcessSchedule(processes);
         Schedule srtSchedule = ShortestRemainingTime.generateProcessSchedule(processes);
         Schedule rrSchedule = RoundRobin.generateProcessSchedule(processes);
-        //TODO: Still error in RR scheduling see VLBeispiel
-        rrSchedule.printSchedule();
+
 
 //        for(Process process : processes){
 //            System.out.println(process.getProcessID() + ";" + "SRT;" + srtSchedule.getTurnAroundTime(process));

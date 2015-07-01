@@ -21,7 +21,7 @@ public class Process {
         this.IOBlockProbability = IOBlockProbability;
         this.IOBlockTime = IOBlockTime;
 
-        this.blockedTill = 0;
+        this.blockedTill = -1;
 
     }
 
@@ -56,13 +56,16 @@ public class Process {
         Random random = new Random();
         Float ranFloat = random.nextFloat() * (max-min)+min;
 
-        if(IOBlockProbability >= ranFloat){
-            blockedTill = ct + IOBlockTime;
-        }
+        if(IOBlockProbability >= ranFloat)
+            blockedTill = ct + IOBlockTime + 1 + 1; //+1 because of block after 1 ms
     }
 
     public Boolean isBlocked(Integer ct){
         return blockedTill >= ct;
+    }
+
+    public Integer getBlockedTill(){
+        return blockedTill;
     }
 
 

@@ -1,3 +1,4 @@
+import java.lang.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -7,35 +8,82 @@ import java.util.Comparator;
  */
 public class FirstComeFirstServe {
     public static Schedule generateProcessSchedule(ArrayList<Process> inputProcesses) {
+
+        /* ---------------------- Initialize ----------------------*/
         ArrayList<Process> processes = new ArrayList<Process>();
+        ArrayList<Process> processQueue = new ArrayList<Process>();
+        Integer ct = 0; //current Time
+        Schedule schedule = new Schedule();
+        Process currentlyRunningProcess = null;
+        Integer startTimeCuRuPr = null;
 
         //clone inputProcesses
-        for(Process process : inputProcesses){
+        for(Process process : inputProcesses) {
             processes.add(process.clone());
         }
-        Integer currentTime = 0;
-        Schedule schedule = new Schedule();
 
+        /* ---------------------- Algorithm ----------------------*/
+        while(processes.size() > 0){
 
-        //Sort processes by arrival time
-        Collections.sort(processes, new Comparator<Process>() {
-            @Override
-            public int compare(Process p1, Process p2) {
-                return p1.getArrivalTime().compareTo(p2.getArrivalTime());
+            //Check if the currently running Process is blocked
+            if(currentlyRunningProcess != null){
+                if(currentlyRunningProcess.isBlocked(ct)){
+                    schedule.add(new ScheduleItem(currentlyRunningProcess.getProcessID(), startTimeCuRuPr, ct, false));
+                    currentlyRunningProcess.setProcessingTime(currentlyRunningProcess.getProcessingTime() - ( ct-startTimeCuRuPr));
+                    currentlyRunningProcess = null;
+                    startTimeCuRuPr = null;
+                }
             }
-        });
 
-        for (Process process : processes) {
-            Integer processStartTime;
-            if (process.getArrivalTime() > currentTime)
-                processStartTime = process.getArrivalTime();
-            else
-                processStartTime = currentTime;
-            schedule.add(new ScheduleItem(process.getProcessID(), processStartTime, processStartTime + process.getProcessingTime(), true));
-            currentTime = processStartTime + process.getProcessingTime();
+            //Check if the currently running process is done
+            if(currentlyRunningProcess != null){
+                if(currentlyRunningProcess.getProcessingTime() == ct-startTimeCuRuPr){
+                    schedule.add(new ScheduleItem(currentlyRunningProcess.getProcessID(), startTimeCuRuPr, ct, true));
+                    processes.remove(currentlyRunningProcess);
+                    currentlyRunningProcess = null;
+                    startTimeCuRuPr = null;
+                }
+            }
+
+            //Fill the processQue
+            for(Process process : processes){
+                //Currently arrived not blocked processes
+                if(process.getArrivalTime() == ct && !(process.isBlocked(ct))){
+                    processQueue.add(process);
+                    continue;
+                }
+                //Processes that were blocked but are now ready
+                if(process.getBlockedTill() == ct){
+                    processQueue.add(process);
+                }
+            }
+
+            if(currentlyRunningProcess != null){
+                ct++;
+                continue;
+            }
+
+            //If no processes are waiting
+            if(processQueue.size()  == 0) {
+                ct++;
+                continue;
+            }
+
+
+            currentlyRunningProcess = processQueue.get(0);
+            startTimeCuRuPr = ct;
+            currentlyRunningProcess.start(ct);
+            processQueue.remove(0);
+            ct++;
+
         }
+
+        //Add last Process to schedule
+
 
 
         return schedule;
     }
+
+
 }
