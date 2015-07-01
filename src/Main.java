@@ -11,8 +11,8 @@ public class Main {
         ArrayList<Process> processes = csvReader.read();
 
         Schedule fcfsSchedule = FirstComeFirstServe.generateProcessSchedule(processes);
-        fcfsSchedule.printSchedule();
         Schedule hrrnSchedule = HighestResponseRatioNext.generateProcessSchedule(processes);
+        hrrnSchedule.printSchedule();
         Schedule spnSchedule = ShortestProcessNext.generateProcessSchedule(processes);
         Schedule srtSchedule = ShortestRemainingTime.generateProcessSchedule(processes);
         Schedule rrSchedule = RoundRobin.generateProcessSchedule(processes);

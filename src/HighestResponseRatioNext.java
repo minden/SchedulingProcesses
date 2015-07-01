@@ -8,63 +8,81 @@ import java.util.Comparator;
 public class HighestResponseRatioNext {
     public static Schedule generateProcessSchedule(ArrayList<Process> inputProcesses) {
         ArrayList<Process> processes = new ArrayList<Process>();
+        ArrayList<Process> processQueue = new ArrayList<Process>();
+        Integer ct = 0;
+        Schedule schedule = new Schedule();
+        Process currentlyRunningProcess = null;
+        Integer startTimeCuRuPr = null;
 
         //clone inputProcesses
         for(Process process : inputProcesses){
             processes.add(process.clone());
         }
 
-        Integer currentTime = 0;
-        Schedule schedule = new Schedule();
-
-        //Sort processes by arrival time
-        //TODO: Is this relevant?
-        Collections.sort(processes, new Comparator<Process>() {
-            @Override
-            public int compare(Process p1, Process p2) {
-                return p1.getArrivalTime().compareTo(p2.getArrivalTime());
-            }
-        });
-
         while(processes.size() != 0) {
 
-            ArrayList<Process> relevantProcesses = new ArrayList<>();
-            //Get all processes that are currently waiting
-            for (Process process : processes) {
-                if (process.getArrivalTime() <= currentTime){
-                    relevantProcesses.add(process);
+            //Check if the currently running process is done
+            if(currentlyRunningProcess != null){
+                if(currentlyRunningProcess.getProcessingTime() == ct-startTimeCuRuPr){
+                    schedule.add(new ScheduleItem(currentlyRunningProcess.getProcessID(), startTimeCuRuPr, ct, true));
+                    processes.remove(currentlyRunningProcess);
+                    currentlyRunningProcess = null;
+                    startTimeCuRuPr = null;
                 }
             }
 
-            //If there are no processes currently available
-            if (relevantProcesses.size() == 0){
-                currentTime++;
+            //Check if the currently running Process is blocked
+            if(currentlyRunningProcess != null){
+                if(currentlyRunningProcess.isBlocked(ct)){
+                    schedule.add(new ScheduleItem(currentlyRunningProcess.getProcessID(), startTimeCuRuPr, ct, false));
+                    currentlyRunningProcess.setProcessingTime(currentlyRunningProcess.getProcessingTime() - ( ct-startTimeCuRuPr));
+                    currentlyRunningProcess = null;
+                    startTimeCuRuPr = null;
+                }
+            }
+
+            //Fill the processQue
+            for(Process process : processes){
+                //Currently arrived not blocked processes
+                if(process.getArrivalTime() == ct && !(process.isBlocked(ct))){
+                    processQueue.add(process);
+                    continue;
+                }
+                //Processes that were blocked but are now ready
+                if(process.getBlockedTill() == ct){
+                    processQueue.add(process);
+                }
+            }
+
+            //If there are no processes currently ready
+            if (processQueue.size() == 0){
+                ct++;
+                continue;
+            }
+
+            if(currentlyRunningProcess != null){
+                ct++;
                 continue;
             }
 
             //Find process with highest response ratio
-            Integer interestingProcess = 0;
-            Float highestResponseRatio = getResponseRatio(currentTime, relevantProcesses.get(0));
-            for(int i = 0; i < relevantProcesses.size(); i++ ){
-                if (getResponseRatio(currentTime, relevantProcesses.get(i)) > highestResponseRatio){
-                    interestingProcess = i;
-                    highestResponseRatio = getResponseRatio(currentTime, relevantProcesses.get(i));
+            Process interestingProcess = processQueue.get(0);
+            Float highestResponseRatio = getResponseRatio(ct, interestingProcess);
+            for(Process process : processQueue){
+                if (getResponseRatio(ct, process) > highestResponseRatio){
+                    interestingProcess = process;
+                    highestResponseRatio = getResponseRatio(ct, process);
                 }
             }
 
-            //add that process to schedule
-            Process processToBeAdded = relevantProcesses.get(interestingProcess);
-            ScheduleItem item = new ScheduleItem(processToBeAdded.getProcessID(),currentTime, currentTime + processToBeAdded.getProcessingTime(), true);
-            schedule.add(item);
-
-            //delete that process from list
-            processes.remove(processToBeAdded);
-
-            currentTime = currentTime + processToBeAdded.getProcessingTime();
+            //run that process
+            currentlyRunningProcess = interestingProcess;
+            startTimeCuRuPr = ct;
+            currentlyRunningProcess.start(ct);
+            processQueue.remove(interestingProcess);
+            ct++;
 
         }
-
-        Main.printProcesses(processes);
 
         return schedule;
     }

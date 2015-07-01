@@ -56,8 +56,8 @@ public class Process {
         Random random = new Random();
         Float ranFloat = random.nextFloat() * (max-min)+min;
 
-        if(IOBlockProbability >= ranFloat)
-            blockedTill = ct + IOBlockTime + 1 + 1; //+1 because of block after 1 ms
+        if(IOBlockProbability > ranFloat)
+            blockedTill = ct + IOBlockTime + 1 ; //+1 because of block after 1 ms
     }
 
     public Boolean isBlocked(Integer ct){
