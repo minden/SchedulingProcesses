@@ -25,6 +25,16 @@ public class FirstComeFirstServe {
         /* ---------------------- Algorithm ----------------------*/
         while(processes.size() > 0){
 
+            //Check if the currently running process is done
+            if(currentlyRunningProcess != null){
+                if(currentlyRunningProcess.getProcessingTime() == ct-startTimeCuRuPr){
+                    schedule.add(new ScheduleItem(currentlyRunningProcess.getProcessID(), startTimeCuRuPr, ct, true));
+                    processes.remove(currentlyRunningProcess);
+                    currentlyRunningProcess = null;
+                    startTimeCuRuPr = null;
+                }
+            }
+
             //Check if the currently running Process is blocked
             if(currentlyRunningProcess != null){
                 if(currentlyRunningProcess.isBlocked(ct)){
@@ -35,15 +45,7 @@ public class FirstComeFirstServe {
                 }
             }
 
-            //Check if the currently running process is done
-            if(currentlyRunningProcess != null){
-                if(currentlyRunningProcess.getProcessingTime() == ct-startTimeCuRuPr){
-                    schedule.add(new ScheduleItem(currentlyRunningProcess.getProcessID(), startTimeCuRuPr, ct, true));
-                    processes.remove(currentlyRunningProcess);
-                    currentlyRunningProcess = null;
-                    startTimeCuRuPr = null;
-                }
-            }
+
 
             //Fill the processQue
             for(Process process : processes){
