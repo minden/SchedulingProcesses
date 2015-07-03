@@ -1,26 +1,21 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by indenml on 21.06.15.
  */
-public class RoundRobin {
-    public static Schedule generateProcessSchedule(ArrayList<Process> inputProcesses) {
+public class RoundRobin extends SchedulingAlgorithm {
 
-        /* ---------------------- Initialize ----------------------*/
-        ArrayList<Process> processes = new ArrayList<Process>();
-        ArrayList<Process> processQueue = new ArrayList<>();
-        Schedule schedule = new Schedule();
-        Integer quantum = 10;
-        Integer ct = 0;
-        Process currentlyRunningProcess = null;
-        Integer startTimeCuRuPr = 0;
+    protected Integer quantum;
 
-        //clone inputProcesses
-        for(Process process : inputProcesses){
-            processes.add(process.clone());
-        }
+    public RoundRobin(List<Process> inputProcesses){
+        super(inputProcesses);
+        quantum = 10;
+    }
+
+    public  Schedule generateProcessSchedule() {
 
         //Sort processes by arrival time
         Collections.sort(processes, new Comparator<Process>() {
@@ -64,18 +59,7 @@ public class RoundRobin {
 
             }
 
-            //Fill processQueue
-            for(Process process : processes){
-                //Currently arrived not blocked processes
-                if(process.getArrivalTime().equals(ct) && !(process.isBlocked(ct))){
-                    processQueue.add(process);
-                    continue;
-                }
-                //Processes that were blocked but are now ready
-                if(process.getBlockedTill().equals(ct)){
-                    processQueue.add(process);
-                }
-            }
+            fillProcessQue();
 
             //If there are no processes currently ready
             if (processQueue.size() == 0){
@@ -88,14 +72,7 @@ public class RoundRobin {
                 continue;
             }
 
-            //run the process
-            currentlyRunningProcess = processQueue.get(0);
-            startTimeCuRuPr = ct;
-            currentlyRunningProcess.start(ct);
-            processQueue.remove(currentlyRunningProcess);
-            ct++;
-
-
+            runProcess(processQueue.get(0));
 
         }
 

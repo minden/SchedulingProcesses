@@ -1,28 +1,19 @@
 import java.lang.*;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by indenml on 21.06.15.
  */
-public class FirstComeFirstServe {
-    public static Schedule generateProcessSchedule(ArrayList<Process> inputProcesses) {
+public class FirstComeFirstServe extends SchedulingAlgorithm{
 
-        /* ---------------------- Initialize ----------------------*/
-        ArrayList<Process> processes = new ArrayList<Process>();
-        ArrayList<Process> processQueue = new ArrayList<Process>();
-        Integer ct = 0; //current Time
-        Schedule schedule = new Schedule();
-        Process currentlyRunningProcess = null;
-        Integer startTimeCuRuPr = null;
+    public FirstComeFirstServe(List<Process> inputProcesses){
+        super(inputProcesses);
+    }
 
-        //clone inputProcesses
-        for(Process process : inputProcesses) {
-            processes.add(process.clone());
-        }
+    @Override
+    public  Schedule generateProcessSchedule() {
 
-        /* ---------------------- Algorithm ----------------------*/
         while(processes.size() > 0){
 
             //Check if the currently running process is done
@@ -52,22 +43,9 @@ public class FirstComeFirstServe {
                     startTimeCuRuPr = null;
                 }
             }
-            }
-
-
 
             //Fill the processQue
-            for(Process process : processes){
-                //Currently arrived not blocked processes
-                if(process.getArrivalTime().equals(ct) && !(process.isBlocked(ct))){
-                    processQueue.add(process);
-                    continue;
-                }
-                //Processes that were blocked but are now ready
-                if(process.getBlockedTill().equals(ct)){
-                    processQueue.add(process);
-                }
-            }
+            fillProcessQue();
 
             if(currentlyRunningProcess != null){
                 ct++;
@@ -80,16 +58,9 @@ public class FirstComeFirstServe {
                 continue;
             }
 
-
-            currentlyRunningProcess = processQueue.get(0);
-            startTimeCuRuPr = ct;
-            currentlyRunningProcess.start(ct);
-            processQueue.remove(0);
-            ct++;
-
+            runProcess(processQueue.get(0));
         }
 
-        //Add last Process to schedule
 
 
 

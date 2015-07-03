@@ -9,17 +9,7 @@ public class HighestResponseRatioNext extends SchedulingAlgorithm{
 
 
     public HighestResponseRatioNext(List<Process> inputProcesses){
-        processes = new ArrayList<Process>();
-        processQueue = new ArrayList<Process>();
-        ct = 0;
-        schedule = new Schedule();
-        currentlyRunningProcess = null;
-        startTimeCuRuPr = null;
-
-        //clone inputProcesses
-        for(Process process : inputProcesses){
-            processes.add(process.clone());
-        }
+        super(inputProcesses);
     }
 
 

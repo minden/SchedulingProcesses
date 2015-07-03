@@ -1,9 +1,10 @@
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by indenml on 03.07.15.
  */
-public class SchedulingAlgorithm {
+public abstract class SchedulingAlgorithm {
 
     protected ArrayList<Process> processes;
     protected ArrayList<Process> processQueue;
@@ -11,6 +12,22 @@ public class SchedulingAlgorithm {
     protected Schedule schedule;
     protected Process currentlyRunningProcess;
     protected Integer startTimeCuRuPr;
+
+
+
+    public SchedulingAlgorithm(List<Process> inputProcesses){
+        processes = new ArrayList<Process>();
+        processQueue = new ArrayList<Process>();
+        ct = 0;
+        schedule = new Schedule();
+        currentlyRunningProcess = null;
+        startTimeCuRuPr = null;
+
+        //clone inputProcesses
+        for(Process process : inputProcesses){
+            processes.add(process.clone());
+        }
+    }
 
     public void fillProcessQue(){
         for(Process process : processes){
@@ -35,4 +52,5 @@ public class SchedulingAlgorithm {
     }
 
 
+    abstract Schedule generateProcessSchedule();
 }

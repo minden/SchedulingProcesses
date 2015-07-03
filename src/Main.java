@@ -11,10 +11,11 @@ public class Main {
         ArrayList<Process> processes = csvReader.read();
         System.out.println("Reading CSV file finished");
 
-        Schedule fcfsSchedule = FirstComeFirstServe.generateProcessSchedule(processes);
+        SchedulingAlgorithm fcfsAlg = new FirstComeFirstServe(processes);
+        Schedule fcfsSchedule = fcfsAlg.generateProcessSchedule();
         System.out.println("FCFS done");
 
-        HighestResponseRatioNext hrrnAlg = new HighestResponseRatioNext(processes);
+        SchedulingAlgorithm hrrnAlg = new HighestResponseRatioNext(processes);
         Schedule hrrnSchedule= hrrnAlg.generateProcessSchedule();
         System.out.println("HRRN done");
 
@@ -22,7 +23,9 @@ public class Main {
         System.out.println("SPN done");
         Schedule srtSchedule = ShortestRemainingTime.generateProcessSchedule(processes);
         System.out.println("SRT done");
-        Schedule rrSchedule = RoundRobin.generateProcessSchedule(processes);
+
+        SchedulingAlgorithm rrAlg = new RoundRobin(processes);
+        Schedule rrSchedule = rrAlg.generateProcessSchedule();
         System.out.println("RR done");
 
 
