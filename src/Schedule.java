@@ -19,7 +19,7 @@ public class Schedule {
         Integer finishTime = 0;
 
         for (ScheduleItem item : schedule){
-            if (item.getFinished() && item.getItemID() == processID){
+            if (item.isFinished() && item.getItemID() == processID){
                 finishTime = item.endTime;
                 break;
             }
@@ -34,7 +34,7 @@ public class Schedule {
             System.out.println("ProcessID: " + item.getItemID());
             System.out.println("  ProcessStartTime: " + item.getStartTime());
             System.out.println("  ProcessEndTime: " + item.getEndTime());
-            System.out.println("  ProcessFinished: " + item.getFinished());
+            System.out.println("  ProcessFinished: " + item.isFinished());
             System.out.println();
         }
         System.out.println("----------------------------------------------");

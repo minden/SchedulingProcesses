@@ -26,7 +26,7 @@ public class ScheduleItem {
         return endTime;
     }
 
-    public Boolean getFinished() {
+    public Boolean isFinished() {
         return finished;
     }
 }
