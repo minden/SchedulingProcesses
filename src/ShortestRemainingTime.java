@@ -1,25 +1,18 @@
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by indenml on 21.06.15.
  */
-public class ShortestRemainingTime {
-    public static Schedule generateProcessSchedule(ArrayList<Process> inputProcesses) {
+public class ShortestRemainingTime extends SchedulingAlgorithm{
 
-        /* ---------------------- Initialize ----------------------*/
-        ArrayList<Process> processes = new ArrayList<Process>();
-        ArrayList<Process> processQueue = new ArrayList<Process>();
-        Integer ct = 0;
-        Schedule schedule = new Schedule();
-        Process currentlyRunningProcess = null;
-        Integer startTimeCuRuPr = 0;
+    public ShortestRemainingTime(List<Process> inputProcesses){
+        super(inputProcesses);
 
-        //clone inputProcesses
-        for(Process process : inputProcesses){
-            processes.add(process.clone());
-        }
+    }
 
-        /* ---------------------- Algorithm ----------------------*/
+    public  Schedule generateProcessSchedule() {
+
         while(processes.size() > 0){
 
             //Check if the currently running process is done
@@ -42,18 +35,7 @@ public class ShortestRemainingTime {
                 }
             }
 
-            //Fill the processQue
-            for(Process process : processes){
-                //Currently arrived not blocked processes
-                if(process.getArrivalTime().equals(ct) && !(process.isBlocked(ct))){
-                    processQueue.add(process);
-                    continue;
-                }
-                //Processes that were blocked but are now ready
-                if(process.getBlockedTill().equals(ct)){
-                    processQueue.add(process);
-                }
-            }
+            fillProcessQue();
 
             //If there are no processes currently ready
             if (processQueue.size() == 0){
@@ -61,18 +43,8 @@ public class ShortestRemainingTime {
                 continue;
             }
 
-
             //Get the process with the smallest processing time
-            Process favouriteProcess = processQueue.get(0);
-            for(Process process : processQueue){
-                if(process.getProcessingTime() < favouriteProcess.getProcessingTime())
-                    favouriteProcess = process;
-                if(process.getProcessingTime() == favouriteProcess.getProcessingTime()){
-                    if(process.getArrivalTime() < favouriteProcess.getArrivalTime())
-                        favouriteProcess = process;
-                }
-            }
-
+            Process favouriteProcess = getProcessSmallestProcessingTime();
 
             if(currentlyRunningProcess != null) {
 
@@ -99,15 +71,24 @@ public class ShortestRemainingTime {
                 }
             }
 
-            //run that process
-            currentlyRunningProcess = favouriteProcess;
-            startTimeCuRuPr = ct;
-            currentlyRunningProcess.start(ct);
-            processQueue.remove(favouriteProcess);
-            ct++;
+            runProcess(favouriteProcess);
 
         }
 
         return schedule;
+    }
+
+    public Process getProcessSmallestProcessingTime(){
+        Process favouriteProcess = processQueue.get(0);
+        for(Process process : processQueue){
+            if(process.getProcessingTime() < favouriteProcess.getProcessingTime()){
+                favouriteProcess = process;}
+            if(process.getProcessingTime() == favouriteProcess.getProcessingTime()){
+                if (process.getArrivalTime() < favouriteProcess.getArrivalTime())
+                    favouriteProcess = process;
+            }
+        }
+
+        return favouriteProcess;
     }
 }

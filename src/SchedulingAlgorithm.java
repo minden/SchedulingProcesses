@@ -13,8 +13,6 @@ public abstract class SchedulingAlgorithm {
     protected Process currentlyRunningProcess;
     protected Integer startTimeCuRuPr;
 
-
-
     public SchedulingAlgorithm(List<Process> inputProcesses){
         processes = new ArrayList<Process>();
         processQueue = new ArrayList<Process>();
@@ -50,7 +48,6 @@ public abstract class SchedulingAlgorithm {
         processQueue.remove(process);
         ct++;
     }
-
 
     abstract Schedule generateProcessSchedule();
 }
