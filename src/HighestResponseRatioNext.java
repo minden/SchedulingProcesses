@@ -1,6 +1,8 @@
+import java.lang.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by indenml on 21.06.15.
@@ -69,14 +71,7 @@ public class HighestResponseRatioNext {
             }
 
             //Find process with highest response ratio
-            Process interestingProcess = processQueue.get(0);
-            Float highestResponseRatio = getResponseRatio(ct, interestingProcess);
-            for(Process process : processQueue){
-                if (getResponseRatio(ct, process) > highestResponseRatio){
-                    interestingProcess = process;
-                    highestResponseRatio = getResponseRatio(ct, process);
-                }
-            }
+            Process interestingProcess = getProcessHighestResponseRatio(ct, processQueue);
 
             //run that process
             currentlyRunningProcess = interestingProcess;
@@ -90,7 +85,21 @@ public class HighestResponseRatioNext {
         return schedule;
     }
 
+    public static Process getProcessHighestResponseRatio(Integer ct, List<Process> processQueue){
+        Process interestingProcess = processQueue.get(0);
+        Float highestResponseRatio = getResponseRatio(ct, interestingProcess);
+        for(Process process : processQueue){
+            if (getResponseRatio(ct, process) > highestResponseRatio){
+                interestingProcess = process;
+                highestResponseRatio = getResponseRatio(ct, process);
+            }
+        }
+        return interestingProcess;
+    }
+
     public static Float getResponseRatio(Integer currentTime, Process process){
         return (Float.valueOf((currentTime - process.getArrivalTime()) + process.getProcessingTime()) / Float.valueOf(process.getProcessingTime()));
     }
+
+
 }
