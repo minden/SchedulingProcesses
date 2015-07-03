@@ -13,7 +13,7 @@ public class Schedule {
         return schedule;
     }
 
-    public int getTurnAroundTime(Process process){
+    public Integer getTurnAroundTime(Process process){
         String processID = process.getProcessID();
         Integer arrivalTime = process.getArrivalTime();
         Integer finishTime = 0;
