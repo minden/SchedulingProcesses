@@ -16,7 +16,7 @@ public class HighestResponseRatioNext extends SchedulingAlgorithm{
     public  Schedule generateProcessSchedule() {
 
         /* ---------------------- Algorithm ----------------------*/
-        while(processes.size() != 0) {
+        while(!processes.isEmpty()) {
 
             //Check if the currently running process is done
             if(currentlyRunningProcess != null){
@@ -43,7 +43,7 @@ public class HighestResponseRatioNext extends SchedulingAlgorithm{
 
 
             //If there are no processes currently ready
-            if (processQueue.size() == 0){
+            if (processQueue.isEmpty()){
                 ct++;
                 continue;
             }

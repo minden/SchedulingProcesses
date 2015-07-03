@@ -26,7 +26,7 @@ public class RoundRobin extends SchedulingAlgorithm {
         });
 
         /* ---------------------- Algorithm ----------------------*/
-        while(processes.size() > 0){
+        while(!processes.isEmpty()){
 
             if(currentlyRunningProcess != null){
 
@@ -62,7 +62,7 @@ public class RoundRobin extends SchedulingAlgorithm {
             fillProcessQue();
 
             //If there are no processes currently ready
-            if (processQueue.size() == 0){
+            if (processQueue.isEmpty()){
                 ct++;
                 continue;
             }

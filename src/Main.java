@@ -19,9 +19,11 @@ public class Main {
         Schedule hrrnSchedule= hrrnAlg.generateProcessSchedule();
         System.out.println("HRRN done");
 
-        Schedule spnSchedule = ShortestProcessNext.generateProcessSchedule(processes);
-        System.out.println("SPN done");
-        Schedule srtSchedule = ShortestRemainingTime.generateProcessSchedule(processes);
+        //Schedule spnSchedule = ShortestProcessNext.generateProcessSchedule(processes);
+        //System.out.println("SPN done");
+
+        SchedulingAlgorithm srtAlg = new ShortestRemainingTime(processes);
+        Schedule srtSchedule = srtAlg.generateProcessSchedule();
         System.out.println("SRT done");
 
         SchedulingAlgorithm rrAlg = new RoundRobin(processes);
@@ -35,7 +37,7 @@ public class Main {
             System.out.println(process.getProcessID() + ";" + "FCFS;" + fcfsSchedule.getTurnAroundTime(process));
             System.out.println(process.getProcessID() + ";" + "HRRN;" + hrrnSchedule.getTurnAroundTime(process));
             System.out.println(process.getProcessID() + ";" + "RR10;" + rrSchedule.getTurnAroundTime(process));
-            System.out.println(process.getProcessID() + ";" + "SPN;" + spnSchedule.getTurnAroundTime(process));
+            //System.out.println(process.getProcessID() + ";" + "SPN;" + spnSchedule.getTurnAroundTime(process));
         }
 
 

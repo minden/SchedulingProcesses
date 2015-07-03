@@ -14,7 +14,7 @@ public class FirstComeFirstServe extends SchedulingAlgorithm{
     @Override
     public  Schedule generateProcessSchedule() {
 
-        while(processes.size() > 0){
+        while(!processes.isEmpty()){
 
             //Check if the currently running process is done
             if(currentlyRunningProcess != null){
@@ -53,16 +53,13 @@ public class FirstComeFirstServe extends SchedulingAlgorithm{
             }
 
             //If no processes are waiting
-            if(processQueue.size()  == 0) {
+            if(processQueue.isEmpty()) {
                 ct++;
                 continue;
             }
 
             runProcess(processQueue.get(0));
         }
-
-
-
 
         return schedule;
     }
