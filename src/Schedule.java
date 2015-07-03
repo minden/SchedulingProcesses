@@ -4,7 +4,7 @@ import java.util.ArrayList;
  * Created by indenml on 24.06.15.
  */
 public class Schedule {
-    private ArrayList<ScheduleItem> schedule = new ArrayList<ScheduleItem>();
+    protected ArrayList<ScheduleItem> schedule = new ArrayList<ScheduleItem>();
     public void add(ScheduleItem item){
         if(item != null)
             this.schedule.add(item);

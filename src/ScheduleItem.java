@@ -2,10 +2,10 @@
  * Created by indenml on 24.06.15.
  */
 public class ScheduleItem {
-    String itemID;
-    Integer startTime;
-    Integer endTime;
-    Boolean finished;
+    protected String itemID;
+    protected Integer startTime;
+    protected Integer endTime;
+    protected Boolean finished;
 
     public ScheduleItem(String itemID, Integer startTime, Integer endTime, Boolean finished){
         this.itemID = itemID;

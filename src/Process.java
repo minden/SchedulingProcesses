@@ -5,13 +5,13 @@ import java.util.Random;
  */
 public class Process {
 
-    private String ProcessID;
-    private Integer ProcessingTime;
-    private Integer ArrivalTime;
-    private Float IOBlockProbability;
-    private Integer IOBlockTime;
+    protected String ProcessID;
+    protected Integer ProcessingTime;
+    protected Integer ArrivalTime;
+    protected Float IOBlockProbability;
+    protected Integer IOBlockTime;
 
-    private Integer blockedTill = null;
+    protected Integer blockedTill = null;
 
     public Process(String ProceddID, Integer ProcessingTime, Integer ArrivalTime, Float IOBlockProbability, Integer IOBlockTime){
 
