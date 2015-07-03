@@ -6,8 +6,7 @@ import java.util.ArrayList;
 public class Schedule {
     protected ArrayList<ScheduleItem> schedule = new ArrayList<ScheduleItem>();
     public void add(ScheduleItem item){
-        if(item != null)
-            this.schedule.add(item);
+        this.schedule.add(item);
     }
 
     public ArrayList<ScheduleItem> getSchedule() {
