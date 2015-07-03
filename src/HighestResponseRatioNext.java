@@ -1,27 +1,29 @@
 import java.lang.*;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
  * Created by indenml on 21.06.15.
  */
-public class HighestResponseRatioNext {
-    public static Schedule generateProcessSchedule(ArrayList<Process> inputProcesses) {
+public class HighestResponseRatioNext extends SchedulingAlgorithm{
 
-        /* ---------------------- Initialize ----------------------*/
-        ArrayList<Process> processes = new ArrayList<Process>();
-        ArrayList<Process> processQueue = new ArrayList<Process>();
-        Integer ct = 0;
-        Schedule schedule = new Schedule();
-        Process currentlyRunningProcess = null;
-        Integer startTimeCuRuPr = null;
+
+    public HighestResponseRatioNext(List<Process> inputProcesses){
+        processes = new ArrayList<Process>();
+        processQueue = new ArrayList<Process>();
+        ct = 0;
+        schedule = new Schedule();
+        currentlyRunningProcess = null;
+        startTimeCuRuPr = null;
 
         //clone inputProcesses
         for(Process process : inputProcesses){
             processes.add(process.clone());
         }
+    }
+
+
+    public  Schedule generateProcessSchedule() {
 
         /* ---------------------- Algorithm ----------------------*/
         while(processes.size() != 0) {
@@ -47,17 +49,8 @@ public class HighestResponseRatioNext {
             }
 
             //Fill the processQue
-            for(Process process : processes){
-                //Currently arrived not blocked processes
-                if(process.getArrivalTime().equals(ct) && !(process.isBlocked(ct))){
-                    processQueue.add(process);
-                    continue;
-                }
-                //Processes that were blocked but are now ready
-                if(process.getBlockedTill().equals(ct)){
-                    processQueue.add(process);
-                }
-            }
+            fillProcessQue();
+
 
             //If there are no processes currently ready
             if (processQueue.size() == 0){
@@ -71,21 +64,19 @@ public class HighestResponseRatioNext {
             }
 
             //Find process with highest response ratio
-            Process interestingProcess = getProcessHighestResponseRatio(ct, processQueue);
+            Process interestingProcess = getProcessHighestResponseRatio();
 
             //run that process
-            currentlyRunningProcess = interestingProcess;
-            startTimeCuRuPr = ct;
-            currentlyRunningProcess.start(ct);
-            processQueue.remove(interestingProcess);
-            ct++;
+            runProcess(interestingProcess);
 
         }
 
         return schedule;
     }
 
-    public static Process getProcessHighestResponseRatio(Integer ct, List<Process> processQueue){
+
+
+    public  Process getProcessHighestResponseRatio(){
         Process interestingProcess = processQueue.get(0);
         Float highestResponseRatio = getResponseRatio(ct, interestingProcess);
         for(Process process : processQueue){

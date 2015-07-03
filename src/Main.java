@@ -13,8 +13,11 @@ public class Main {
 
         Schedule fcfsSchedule = FirstComeFirstServe.generateProcessSchedule(processes);
         System.out.println("FCFS done");
-        Schedule hrrnSchedule = HighestResponseRatioNext.generateProcessSchedule(processes);
+
+        HighestResponseRatioNext hrrnAlg = new HighestResponseRatioNext(processes);
+        Schedule hrrnSchedule= hrrnAlg.generateProcessSchedule();
         System.out.println("HRRN done");
+
         Schedule spnSchedule = ShortestProcessNext.generateProcessSchedule(processes);
         System.out.println("SPN done");
         Schedule srtSchedule = ShortestRemainingTime.generateProcessSchedule(processes);
