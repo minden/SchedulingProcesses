@@ -53,8 +53,10 @@ public class Process {
         Float max = 1f;
         Float min = 0f;
 
+        //TODO: 42 löschen
         Random random = new Random(42);
         Float ranFloat = random.nextFloat() * (max-min)+min;
+
 
         if(IOBlockProbability > ranFloat)
             blockedTill = ct + IOBlockTime + 1 ; //+1 because of block after 1 ms

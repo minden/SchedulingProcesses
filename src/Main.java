@@ -30,15 +30,22 @@ public class Main {
         Schedule rrSchedule = rrAlg.generateProcessSchedule();
         System.out.println("RR done");
 
-
-
         for(Process process : processes){
-            System.out.println(process.getProcessID() + ";" + "SRT;" + srtSchedule.getTurnAroundTime(process));
+            System.out.println(process.getProcessID() + ";" + "SRT;" +  srtSchedule.getTurnAroundTime(process) );
             System.out.println(process.getProcessID() + ";" + "FCFS;" + fcfsSchedule.getTurnAroundTime(process));
             System.out.println(process.getProcessID() + ";" + "HRRN;" + hrrnSchedule.getTurnAroundTime(process));
             System.out.println(process.getProcessID() + ";" + "RR10;" + rrSchedule.getTurnAroundTime(process));
             //System.out.println(process.getProcessID() + ";" + "SPN;" + spnSchedule.getTurnAroundTime(process));
         }
+
+//        //TODO: Löschen
+//        for(Process process : processes){
+//            System.out.println(process.getProcessID() + ";" + "SRT;" +  srtSchedule.getTurnAroundTime(process) + ";" + srtSchedule.getEndTime(process));
+//            System.out.println(process.getProcessID() + ";" + "FCFS;" + fcfsSchedule.getTurnAroundTime(process)+ ";" + fcfsSchedule.getEndTime(process));
+//            System.out.println(process.getProcessID() + ";" + "HRRN;" + hrrnSchedule.getTurnAroundTime(process)+ ";" + hrrnSchedule.getEndTime(process));
+//            System.out.println(process.getProcessID() + ";" + "RR10;" + rrSchedule.getTurnAroundTime(process)+ ";" + rrSchedule.getEndTime(process));
+//            //System.out.println(process.getProcessID() + ";" + "SPN;" + spnSchedule.getTurnAroundTime(process)+ ";" + srtSchedule.getEndTime(process));
+//        }
 
 
     }

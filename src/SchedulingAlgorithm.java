@@ -6,8 +6,8 @@ import java.util.List;
  */
 public abstract class SchedulingAlgorithm {
 
-    protected ArrayList<Process> processes;
-    protected ArrayList<Process> processQueue;
+    protected List<Process> processes;
+    protected List<Process> processQueue;
     protected Integer ct;
     protected Schedule schedule;
     protected Process currentlyRunningProcess;

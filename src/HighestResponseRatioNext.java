@@ -41,7 +41,6 @@ public class HighestResponseRatioNext extends SchedulingAlgorithm{
             //Fill the processQue
             fillProcessQue();
 
-
             //If there are no processes currently ready
             if (processQueue.isEmpty()){
                 ct++;
