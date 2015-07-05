@@ -8,8 +8,8 @@ import java.util.ArrayList;
  * Created by indenml on 21.06.15.
  */
 public class CSVReader {
-    public ArrayList<Process> read(){
-        String csvFile = "/home/indenml/S4/csos/bonus/03/SchedulingProcesses/VLBeispiel.csv";
+    public ArrayList<Process> read(String path){
+        String csvFile = path;
         BufferedReader br = null;
         String line = null;
         String csvSplitBy = ";";
@@ -25,9 +25,13 @@ public class CSVReader {
             }
 
         } catch(FileNotFoundException e){
+            System.out.println("File not found");
             e.printStackTrace();
+            System.exit(1);
         } catch (IOException e){
+            System.out.println("Could not read file");
             e.printStackTrace();
+            System.exit(1);
         } finally{
             if(br != null){
                 try{

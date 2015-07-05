@@ -7,8 +7,19 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
 
+        if(args.length != 1){
+            if (args.length > 1){
+                System.out.println("To many arguments specified!");
+                System.exit(1);
+            }
+            if(args.length < 1){
+                System.out.println("Please specify an input file");
+                System.exit(1);
+            }
+        }
+
         CSVReader csvReader = new CSVReader();
-        ArrayList<Process> processes = csvReader.read();
+        ArrayList<Process> processes = csvReader.read(args[0]);
         System.out.println("Reading CSV file finished");
 
         SchedulingAlgorithm fcfsAlg = new FirstComeFirstServe(processes);

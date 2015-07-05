@@ -77,7 +77,7 @@ public class HighestResponseRatioNext extends SchedulingAlgorithm{
         return interestingProcess;
     }
 
-    public static Float getResponseRatio(Integer currentTime, Process process){
+    public  Float getResponseRatio(Integer currentTime, Process process){
         return (Float.valueOf((currentTime - process.getArrivalTime()) + process.getProcessingTime()) / Float.valueOf(process.getProcessingTime()));
     }
 
