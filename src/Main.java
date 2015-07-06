@@ -7,10 +7,15 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
 
+        Boolean debug = false;
+
         if(args.length != 1){
             if (args.length > 1){
-                System.out.println("To many arguments specified!");
-                System.exit(1);
+                if(!args[1].equals("-d")){
+                    System.out.println(args[1]+ ": Too many / wrong arguments specified!");
+                    System.exit(1);
+                }
+                else debug = true;
             }
             if(args.length < 1){
                 System.out.println("Please specify an input file");
@@ -20,26 +25,26 @@ public class Main {
 
         CSVReader csvReader = new CSVReader();
         ArrayList<Process> processes = csvReader.read(args[0]);
-        System.out.println("Reading CSV file finished");
+        if(debug) System.out.println("Reading CSV file finished");
 
         SchedulingAlgorithm fcfsAlg = new FirstComeFirstServe(processes);
         Schedule fcfsSchedule = fcfsAlg.generateProcessSchedule();
-        System.out.println("FCFS done");
+        if(debug) System.out.println("FCFS done");
 
         SchedulingAlgorithm hrrnAlg = new HighestResponseRatioNext(processes);
         Schedule hrrnSchedule= hrrnAlg.generateProcessSchedule();
-        System.out.println("HRRN done");
+        if (debug )System.out.println("HRRN done");
 
         //Schedule spnSchedule = ShortestProcessNext.generateProcessSchedule(processes);
         //System.out.println("SPN done");
 
         SchedulingAlgorithm srtAlg = new ShortestRemainingTime(processes);
         Schedule srtSchedule = srtAlg.generateProcessSchedule();
-        System.out.println("SRT done");
+        if(debug)System.out.println("SRT done");
 
         SchedulingAlgorithm rrAlg = new RoundRobin(processes);
         Schedule rrSchedule = rrAlg.generateProcessSchedule();
-        System.out.println("RR done");
+        if(debug)System.out.println("RR done");
 
         for(Process process : processes){
             System.out.println(process.getProcessID() + ";" + "SRT;" +  srtSchedule.getTurnAroundTime(process) );
@@ -49,7 +54,7 @@ public class Main {
             //System.out.println(process.getProcessID() + ";" + "SPN;" + spnSchedule.getTurnAroundTime(process));
         }
 
-        discussion(srtSchedule, fcfsSchedule, hrrnSchedule, rrSchedule, processes);
+        if(debug) discussion(srtSchedule, fcfsSchedule, hrrnSchedule, rrSchedule, processes);
 
 //        //TODO: Löschen
 //        for(Process process : processes){

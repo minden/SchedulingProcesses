@@ -32,6 +32,10 @@ Please run the jar file in a terminal like following
 ```sh
 java -jar SchedulingProcesses.jar PathToCSVFile
 ```
+for further debugging and average computing please run:
+```sh
+java -jar SchedulingProcesses.jar PathToCSVFile -d
+```
 
 
 
