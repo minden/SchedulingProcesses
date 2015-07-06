@@ -26,11 +26,9 @@ public class CSVReader {
 
         } catch(FileNotFoundException e){
             System.out.println("File not found");
-            e.printStackTrace();
             System.exit(1);
         } catch (IOException e){
             System.out.println("Could not read file");
-            e.printStackTrace();
             System.exit(1);
         } finally{
             if(br != null){

@@ -53,8 +53,7 @@ public class Process {
         Float max = 1f;
         Float min = 0f;
 
-        //TODO: 42 löschen
-        Random random = new Random(42);
+        Random random = new Random();
         Float ranFloat = random.nextFloat() * (max-min)+min;
 
 

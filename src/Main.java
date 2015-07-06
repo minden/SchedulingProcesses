@@ -49,6 +49,8 @@ public class Main {
             //System.out.println(process.getProcessID() + ";" + "SPN;" + spnSchedule.getTurnAroundTime(process));
         }
 
+        discussion(srtSchedule, fcfsSchedule, hrrnSchedule, rrSchedule, processes);
+
 //        //TODO: Löschen
 //        for(Process process : processes){
 //            System.out.println(process.getProcessID() + ";" + "SRT;" +  srtSchedule.getTurnAroundTime(process) + ";" + srtSchedule.getEndTime(process));
@@ -71,6 +73,128 @@ public class Main {
             System.out.println();
         }
         System.out.println("----------------------------------------------");
+    }
+
+    public static void discussion(Schedule srt, Schedule fcfs, Schedule hrrn, Schedule rr, ArrayList<Process> processes){
+
+        /*----------------------------SRT----------------------------*/
+        Integer sum = 0;
+        Integer count = 0;
+        for(Process process : processes){
+            sum += srt.getTurnAroundTime(process);
+            count ++;
+        }
+        System.out.println("Average SRT all processes: " + (sum / count));
+
+        sum = 0;
+        count = 0;
+        for(Process process : processes){
+            if(process.getIOBlockProbability().equals(0.0f)){
+                sum += srt.getTurnAroundTime(process);
+                count ++;
+            }
+        }
+        System.out.println("Average SRT cpu bounded processes: " + (sum / count));
+
+        sum = 0;
+        count = 0;
+        for(Process process : processes) {
+            if (process.getIOBlockProbability() >= 0.5f){
+                sum += srt.getTurnAroundTime(process);
+                count++;
+            }
+        }
+        System.out.println("Average SRT I/O bound processes: " + (sum / count));
+
+        /*----------------------------FCFS----------------------------*/
+         sum = 0;
+         count = 0;
+        for(Process process : processes){
+            sum += fcfs.getTurnAroundTime(process);
+            count ++;
+        }
+        System.out.println("Average FCFS all processes: " + (sum / count));
+
+        sum = 0;
+        count = 0;
+        for(Process process : processes){
+            if(process.getIOBlockProbability().equals(0.0f)){
+                sum += fcfs.getTurnAroundTime(process);
+                count ++;
+            }
+        }
+        System.out.println("Average FCFS cpu bounded processes: " + (sum / count));
+
+        sum = 0;
+        count = 0;
+        for(Process process : processes) {
+            if (process.getIOBlockProbability() >= 0.5f){
+                sum += fcfs.getTurnAroundTime(process);
+                count++;
+            }
+        }
+        System.out.println("Average FCFS I/O bound processes: " + (sum / count));
+
+        /*----------------------------HRRN----------------------------*/
+         sum = 0;
+         count = 0;
+        for(Process process : processes){
+            sum += hrrn.getTurnAroundTime(process);
+            count ++;
+        }
+        System.out.println("Average HRRN all processes: " + (sum / count));
+
+        sum = 0;
+        count = 0;
+        for(Process process : processes){
+            if(process.getIOBlockProbability().equals(0.0f)){
+                sum += hrrn.getTurnAroundTime(process);
+                count ++;
+            }
+        }
+        System.out.println("Average HRRN cpu bounded processes: " + (sum / count));
+
+        sum = 0;
+        count = 0;
+        for(Process process : processes) {
+            if (process.getIOBlockProbability() >= 0.5f){
+                sum += hrrn.getTurnAroundTime(process);
+                count++;
+            }
+        }
+        System.out.println("Average HRRN I/O bound processes: " + (sum / count));
+
+
+        /*----------------------------RR----------------------------*/
+         sum = 0;
+         count = 0;
+        for(Process process : processes){
+            sum += rr.getTurnAroundTime(process);
+            count ++;
+        }
+        System.out.println("Average RR all processes: " + (sum / count));
+
+        sum = 0;
+        count = 0;
+        for(Process process : processes){
+            if(process.getIOBlockProbability().equals(0.0f)){
+                sum += rr.getTurnAroundTime(process);
+                count ++;
+            }
+        }
+        System.out.println("Average RR cpu bounded processes: " + (sum / count));
+
+        sum = 0;
+        count = 0;
+        for(Process process : processes) {
+            if (process.getIOBlockProbability() >= 0.5f){
+                sum += rr.getTurnAroundTime(process);
+                count++;
+            }
+        }
+        System.out.println("Average RR I/O bound processes: " + (sum / count));
+
+
     }
 
 
